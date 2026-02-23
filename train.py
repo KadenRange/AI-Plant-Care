@@ -190,7 +190,6 @@ def train(
         mode="max",
         factor=HPARAMS["scheduler_factor"],
         patience=HPARAMS["scheduler_patience"],
-        verbose=True,
     )
     criterion = nn.CrossEntropyLoss()
 
