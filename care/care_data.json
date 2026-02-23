@@ -1,0 +1,343 @@
+{
+  "Aloe Vera": {
+    "watering": {
+      "frequency": "Every 2–3 weeks in summer, every 4–6 weeks in winter.",
+      "method": "Deep water, then allow the soil to dry out completely before watering again. Never let the plant sit in standing water.",
+      "tip": "Err on the side of underwatering — aloe stores water in its leaves and is highly susceptible to root rot."
+    },
+    "light": {
+      "ideal": "Bright indirect light to moderate direct sun (6+ hours/day).",
+      "tolerance": "Tolerates lower light, but growth will slow and leaves may etiolate (stretch toward the light).",
+      "warning": "Avoid sudden exposure to intense afternoon sun, which can cause sunscald (brown, dry patches)."
+    },
+    "humidity": {
+      "ideal_range_percent": "30–50 %",
+      "notes": "Thrives in low-humidity environments. No misting needed."
+    },
+    "temperature": {
+      "ideal_range_f": "55–80 °F (13–27 °C)",
+      "min_f": 50,
+      "cold_sensitivity": "Frost will damage or kill the plant. Bring indoors when temps drop below 50 °F."
+    },
+    "common_issues": [
+      {
+        "symptom": "Mushy, brown, or translucent leaves at base",
+        "cause": "Root rot from overwatering or poor drainage",
+        "fix": "Remove from pot, trim affected roots, let dry 24 h, replant in well-draining cactus mix."
+      },
+      {
+        "symptom": "Brown, dry leaf tips",
+        "cause": "Too much direct sun, under-watering, or fluoride in tap water",
+        "fix": "Move to bright indirect light; switch to filtered or rainwater."
+      },
+      {
+        "symptom": "Pale or yellowish leaves",
+        "cause": "Insufficient light",
+        "fix": "Move to a brighter location gradually."
+      }
+    ],
+    "toxicity": {
+      "toxic_to_pets": true,
+      "toxic_to_humans": false,
+      "details": "Saponins in the gel and latex layer are toxic to cats and dogs (vomiting, diarrhea, lethargy). The inner gel is safe for human topical use but the yellow latex layer should not be ingested."
+    },
+    "soil": "Well-draining cactus or succulent mix. Add perlite for extra drainage.",
+    "fertilizer": "Feed once in spring and once in summer with a balanced diluted liquid fertilizer (10-40-10). Avoid fertilizing in fall/winter."
+  },
+
+  "Monstera Deliciosa": {
+    "watering": {
+      "frequency": "Every 1–2 weeks; allow the top 2 inches of soil to dry between waterings.",
+      "method": "Water thoroughly until it drains from the bottom. Empty the saucer after 30 minutes.",
+      "tip": "Stick your finger 2 inches into the soil — if it's still moist, wait a few more days."
+    },
+    "light": {
+      "ideal": "Bright indirect light (2–4 feet from a south- or east-facing window).",
+      "tolerance": "Tolerates medium light but fenestrations (leaf holes) develop best in bright conditions.",
+      "warning": "Direct afternoon sun will scorch the large leaves."
+    },
+    "humidity": {
+      "ideal_range_percent": "60–80 %",
+      "notes": "Appreciates regular misting, a pebble tray with water, or a humidifier in dry climates."
+    },
+    "temperature": {
+      "ideal_range_f": "65–85 °F (18–29 °C)",
+      "min_f": 60,
+      "cold_sensitivity": "Avoid drafts, air conditioning vents, and temps below 60 °F."
+    },
+    "common_issues": [
+      {
+        "symptom": "Yellow leaves",
+        "cause": "Overwatering or root rot",
+        "fix": "Reduce watering frequency and ensure good drainage."
+      },
+      {
+        "symptom": "Brown leaf edges or tips",
+        "cause": "Low humidity or inconsistent watering",
+        "fix": "Increase ambient humidity and establish a consistent watering schedule."
+      },
+      {
+        "symptom": "Small leaves without fenestrations",
+        "cause": "Insufficient light",
+        "fix": "Move to a brighter spot with more indirect light."
+      },
+      {
+        "symptom": "Root-bound, stunted growth",
+        "cause": "Pot too small",
+        "fix": "Repot into a container 2 inches larger every 1–2 years."
+      }
+    ],
+    "toxicity": {
+      "toxic_to_pets": true,
+      "toxic_to_humans": true,
+      "details": "Contains insoluble calcium oxalates. Ingestion causes oral irritation, drooling, vomiting in pets and humans. Keep out of reach of children and animals."
+    },
+    "soil": "Rich, well-draining mix: potting soil with perlite and orchid bark (2:1:1).",
+    "fertilizer": "Balanced liquid fertilizer (e.g., 20-20-20) diluted to half strength monthly during spring and summer. No feeding in fall/winter."
+  },
+
+  "Dumb Cane (Dieffenbachia)": {
+    "watering": {
+      "frequency": "Every 5–7 days in growing season; reduce to every 10–14 days in winter.",
+      "method": "Water evenly until drainage runs clear. Allow the top inch of soil to dry between waterings.",
+      "tip": "Avoid letting the plant completely dry out — wilting stress causes leaf drop."
+    },
+    "light": {
+      "ideal": "Medium to bright indirect light. Variegated varieties need more light to maintain their markings.",
+      "tolerance": "Tolerates low light but growth slows significantly.",
+      "warning": "Direct sun bleaches leaves and causes brown scorch marks."
+    },
+    "humidity": {
+      "ideal_range_percent": "60–70 %",
+      "notes": "Benefits from misting or a humidifier. Brown leaf edges indicate air is too dry."
+    },
+    "temperature": {
+      "ideal_range_f": "65–75 °F (18–24 °C)",
+      "min_f": 60,
+      "cold_sensitivity": "Very sensitive to cold drafts and temperatures below 60 °F; leaves will drop."
+    },
+    "common_issues": [
+      {
+        "symptom": "Yellow lower leaves",
+        "cause": "Overwatering or natural shedding of older leaves",
+        "fix": "Reduce watering; check roots for rot."
+      },
+      {
+        "symptom": "Brown leaf tips and edges",
+        "cause": "Low humidity, fluoride in tap water, or fertilizer salt buildup",
+        "fix": "Use filtered water, flush soil periodically, and raise humidity."
+      },
+      {
+        "symptom": "Spider mites (fine webbing, stippled leaves)",
+        "cause": "Hot, dry conditions",
+        "fix": "Wipe leaves with a damp cloth; treat with neem oil spray."
+      }
+    ],
+    "toxicity": {
+      "toxic_to_pets": true,
+      "toxic_to_humans": true,
+      "details": "Highly toxic — calcium oxalate crystals cause intense oral burning and swelling that can temporarily impair speech (hence 'dumb cane'). Can be life-threatening if large amounts are ingested. Handle with gloves; keep away from children and pets."
+    },
+    "soil": "Well-draining, humus-rich potting mix. Avoid compacted or heavy soils.",
+    "fertilizer": "Balanced fertilizer (e.g., 20-20-20) every 4 weeks in spring and summer, diluted to half strength. Avoid over-fertilizing, which causes leaf burn."
+  },
+
+  "Pothos (Epipremnum aureum)": {
+    "watering": {
+      "frequency": "Every 1–2 weeks; allow the top inch of soil to dry out.",
+      "method": "Water thoroughly. Pothos tolerates occasional missed waterings but not chronic drought.",
+      "tip": "Yellowing leaves usually mean overwatering; wilting or crispy tips mean underwatering."
+    },
+    "light": {
+      "ideal": "Medium to bright indirect light preserves variegation.",
+      "tolerance": "Tolerates low light better than most houseplants — a key reason it's a beginner favorite.",
+      "warning": "Direct sun will bleach the leaves. Very low light causes loss of variegation (leaves revert to solid green)."
+    },
+    "humidity": {
+      "ideal_range_percent": "50–70 %",
+      "notes": "Adaptable to average household humidity (40–60 %). No special measures needed in most homes."
+    },
+    "temperature": {
+      "ideal_range_f": "60–80 °F (15–27 °C)",
+      "min_f": 50,
+      "cold_sensitivity": "Leaves turn black and mushy below 50 °F. Avoid cold windowsills in winter."
+    },
+    "common_issues": [
+      {
+        "symptom": "Yellow leaves throughout plant",
+        "cause": "Overwatering or root rot",
+        "fix": "Allow soil to dry more between waterings; improve drainage."
+      },
+      {
+        "symptom": "Leggy, widely spaced leaves",
+        "cause": "Insufficient light",
+        "fix": "Move closer to a light source. Trim and propagate long trailing stems."
+      },
+      {
+        "symptom": "Black or brown mushy stem sections",
+        "cause": "Root rot from overwatering",
+        "fix": "Trim affected sections back to healthy tissue; repot in fresh, dry soil."
+      },
+      {
+        "symptom": "Mealybugs (white cottony clusters)",
+        "cause": "Dry conditions or stressed plant",
+        "fix": "Remove with isopropyl alcohol on a cotton swab; treat with neem oil."
+      }
+    ],
+    "toxicity": {
+      "toxic_to_pets": true,
+      "toxic_to_humans": true,
+      "details": "Calcium oxalate crystals cause oral irritation, drooling, vomiting in cats, dogs, and humans. Keep out of reach."
+    },
+    "soil": "Standard well-draining potting mix. Thrives in slightly pot-bound conditions.",
+    "fertilizer": "Balanced liquid fertilizer monthly during spring and summer. Skip in fall and winter."
+  },
+
+  "Peace Lily (Spathiphyllum wallisii)": {
+    "watering": {
+      "frequency": "Every 7–10 days; keep soil consistently moist but not waterlogged.",
+      "method": "Water when the top inch of soil feels dry, or when leaves begin to droop slightly (an early thirst signal).",
+      "tip": "Peace lilies droop dramatically when thirsty but recover quickly after watering. Use this as a visual cue but try not to let it get that stressed regularly."
+    },
+    "light": {
+      "ideal": "Low to medium indirect light; one of the best low-light flowering plants.",
+      "tolerance": "Survives in quite dim conditions but won't bloom without at least medium indirect light.",
+      "warning": "Direct sun scorches leaves within hours. Avoid south-facing windows without a sheer curtain."
+    },
+    "humidity": {
+      "ideal_range_percent": "50–60 %",
+      "notes": "Brown leaf tips are the first sign of low humidity. Mist leaves, use a pebble tray, or place near a humidifier."
+    },
+    "temperature": {
+      "ideal_range_f": "65–80 °F (18–27 °C)",
+      "min_f": 55,
+      "cold_sensitivity": "Chilling below 55 °F causes yellow, water-soaked patches on leaves. Avoid cold drafts and air conditioning vents."
+    },
+    "common_issues": [
+      {
+        "symptom": "Brown leaf tips",
+        "cause": "Low humidity, fluoride/chlorine in tap water, or fertilizer salt buildup",
+        "fix": "Use filtered or distilled water; flush soil every few months; raise humidity."
+      },
+      {
+        "symptom": "Yellow leaves",
+        "cause": "Overwatering or root rot",
+        "fix": "Let soil dry slightly more between waterings; check roots."
+      },
+      {
+        "symptom": "No blooms",
+        "cause": "Insufficient light or needs repotting",
+        "fix": "Move to brighter indirect light; apply a high-phosphorus fertilizer in early spring."
+      },
+      {
+        "symptom": "Wilting despite moist soil",
+        "cause": "Root rot — roots can no longer absorb water",
+        "fix": "Unpot, trim rotted roots, repot in fresh well-draining mix."
+      }
+    ],
+    "toxicity": {
+      "toxic_to_pets": true,
+      "toxic_to_humans": true,
+      "details": "Contains calcium oxalates; can cause oral irritation, vomiting, and difficulty swallowing in cats, dogs, and humans. Moderately toxic."
+    },
+    "soil": "Rich, moisture-retaining mix with good drainage (potting soil + perlite 3:1).",
+    "fertilizer": "Balanced, water-soluble fertilizer at half strength every 6 weeks during spring and summer. Over-fertilizing causes brown leaf tips."
+  },
+
+  "Snake Plant (Sansevieria)": {
+    "watering": {
+      "frequency": "Every 2–4 weeks in summer; every 6–8 weeks in winter.",
+      "method": "Drench the soil, then allow it to dry out completely before watering again.",
+      "tip": "When in doubt, do NOT water. Snake plants almost always die from overwatering, never from underwatering."
+    },
+    "light": {
+      "ideal": "Indirect light of any level — adaptable from low to bright indirect.",
+      "tolerance": "One of the most light-tolerant houseplants; survives in dim hallways.",
+      "warning": "Very prolonged low light leads to pale, floppy leaves. Some direct morning sun is beneficial."
+    },
+    "humidity": {
+      "ideal_range_percent": "30–50 %",
+      "notes": "Thrives in dry air. No misting required and high humidity can encourage fungal issues."
+    },
+    "temperature": {
+      "ideal_range_f": "60–80 °F (15–27 °C)",
+      "min_f": 50,
+      "cold_sensitivity": "Sensitive to frost and prolonged temperatures below 50 °F; cold damage appears as soft, mushy leaf sections."
+    },
+    "common_issues": [
+      {
+        "symptom": "Soft, mushy base or roots",
+        "cause": "Root rot from overwatering",
+        "fix": "Remove from pot, cut all mushy roots and leaf bases back to firm tissue, dust with cinnamon or sulphur, dry for 24–48 h, repot in dry, gritty mix."
+      },
+      {
+        "symptom": "Brown, crispy leaf tips",
+        "cause": "Underwatering, fluoride in tap water, or very low humidity",
+        "fix": "Water slightly more consistently; switch to filtered water."
+      },
+      {
+        "symptom": "Wrinkled, shrunken leaves",
+        "cause": "Severe underwatering",
+        "fix": "Give a thorough watering; recovery is usually quick."
+      }
+    ],
+    "toxicity": {
+      "toxic_to_pets": true,
+      "toxic_to_humans": false,
+      "details": "Saponins cause nausea, vomiting, and diarrhea in cats and dogs. Generally mildly toxic to humans if large amounts are ingested."
+    },
+    "soil": "Fast-draining cactus/succulent mix or standard potting soil cut with 50 % perlite or coarse sand.",
+    "fertilizer": "Half-strength balanced fertilizer once in spring and once in summer. Do not fertilize in fall or winter."
+  },
+
+  "ZZ Plant (Zamioculcas zamiifolia)": {
+    "watering": {
+      "frequency": "Every 2–3 weeks in summer; every 3–4 weeks in winter.",
+      "method": "Water thoroughly, then allow soil to dry completely. ZZ plants store water in their rhizomes.",
+      "tip": "This is arguably the most drought-tolerant common houseplant. When unsure, skip the watering."
+    },
+    "light": {
+      "ideal": "Low to bright indirect light. Thrives in office lighting.",
+      "tolerance": "Survives in very low light conditions better than nearly any other houseplant.",
+      "warning": "Direct summer sun causes leaf scorch. Avoid south-facing windows in peak summer months."
+    },
+    "humidity": {
+      "ideal_range_percent": "40–60 %",
+      "notes": "Adapts easily to average household humidity. No misting or humidifier required."
+    },
+    "temperature": {
+      "ideal_range_f": "65–75 °F (18–24 °C)",
+      "min_f": 45,
+      "cold_sensitivity": "Tolerates brief dips to 45 °F but prolonged cold causes yellowing and rot. Keep away from exterior walls in winter."
+    },
+    "common_issues": [
+      {
+        "symptom": "Yellow leaves (widespread)",
+        "cause": "Overwatering or root/rhizome rot",
+        "fix": "Withhold water immediately; check rhizomes for soft spots. Repot if necessary."
+      },
+      {
+        "symptom": "Brown leaf tips",
+        "cause": "Underwatering or very low humidity",
+        "fix": "Establish more consistent (but still infrequent) watering; check rhizomes — if plump, the plant is fine."
+      },
+      {
+        "symptom": "Slow growth",
+        "cause": "Normal — ZZ plants are inherently slow growers, especially in low light",
+        "fix": "Move to slightly brighter indirect light and feed in spring/summer."
+      },
+      {
+        "symptom": "Leggy stems leaning toward light",
+        "cause": "Low light",
+        "fix": "Rotate pot regularly or move to a brighter position."
+      }
+    ],
+    "toxicity": {
+      "toxic_to_pets": true,
+      "toxic_to_humans": true,
+      "details": "All parts contain calcium oxalate crystals. Contact with sap can irritate skin and eyes; ingestion causes oral burning, vomiting. Wear gloves when handling and keep away from children and pets."
+    },
+    "soil": "Well-draining mix — standard potting soil with added perlite (2:1). Avoid moisture-retaining mixes.",
+    "fertilizer": "Half-strength balanced fertilizer once a month during spring and summer only. Fertilizing in autumn/winter can cause salt buildup and root damage."
+  }
+}
