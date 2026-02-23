@@ -146,9 +146,12 @@ def get_dataloaders(
         # ClassLabel feature: example["label"] returns an int
         int_to_name: dict[int, str] = {i: n for i, n in enumerate(label_feature.names)}
         label_is_int = True
+        raw_pairs: list[tuple[int, str]] | None = None
     else:
-        # String-valued labels: enumerate unique values
-        unique = sorted({str(ex["__key__"]) for ex in raw})
+        # String-valued labels: single pass to collect keys and cache index pairs
+        # so the dataset is not iterated a second time below.
+        raw_pairs = [(i, str(ex["__key__"])) for i, ex in enumerate(raw)]
+        unique    = sorted({key for _, key in raw_pairs})
         int_to_name = {i: v for i, v in enumerate(unique)}
         str_to_int  = {v: k for k, v in int_to_name.items()}
         label_is_int = False
@@ -173,15 +176,22 @@ def get_dataloaders(
             "Adjust TARGET_CLASSES or _ALIASES in dataloader.py."
         )
 
-    # ── Single pass: collect valid (hf_index, remapped_label) pairs ──────────
+    # ── Collect valid (hf_index, remapped_label) pairs ───────────────────────
     valid_orig = set(orig_to_new)
     all_records: list[tuple[int, int]] = []
 
-    for hf_idx, example in enumerate(raw):
-        raw_label = example["label"] if label_is_int else example["__key__"]
-        orig_int: int | None = int(raw_label) if label_is_int else str_to_int.get(str(raw_label))
-        if orig_int is not None and orig_int in valid_orig:
-            all_records.append((hf_idx, orig_to_new[orig_int]))
+    if label_is_int:
+        for hf_idx, example in enumerate(raw):
+            orig_int = int(example["label"])
+            if orig_int in valid_orig:
+                all_records.append((hf_idx, orig_to_new[orig_int]))
+    else:
+        # raw_pairs was built during the unique-key pass above — no second read
+        assert raw_pairs is not None
+        for hf_idx, raw_key in raw_pairs:
+            orig_int = str_to_int.get(raw_key)
+            if orig_int is not None and orig_int in valid_orig:
+                all_records.append((hf_idx, orig_to_new[orig_int]))
 
     # ── Reproducible 70 / 15 / 15 split ──────────────────────────────────────
     total   = len(all_records)
