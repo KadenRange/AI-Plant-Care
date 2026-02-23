@@ -90,17 +90,19 @@ class _PlantSubset(Dataset):
         hf_dataset,
         records: list[tuple[int, int]],
         transform: Callable,
+        image_key: str = "image",
     ) -> None:
         self.hf_dataset = hf_dataset
         self.records = records
         self.transform = transform
+        self.image_key = image_key
 
     def __len__(self) -> int:
         return len(self.records)
 
     def __getitem__(self, idx: int) -> tuple[torch.Tensor, int]:
         hf_idx, label = self.records[idx]
-        img = self.hf_dataset[hf_idx]["image"]
+        img = self.hf_dataset[hf_idx][self.image_key]
         if not isinstance(img, Image.Image):
             img = Image.fromarray(img)
         return self.transform(img.convert("RGB")), label
@@ -129,6 +131,15 @@ def get_dataloaders(
     """
     raw = load_dataset("kakasher/house-plant-species", split="train")
     label_feature = raw.features.get("label") or raw.features.get("labels")
+
+    # ── Detect image field name (WebDataset stores images as "jpg", not "image") ─
+    _IMAGE_KEYS = ("image", "jpg", "jpeg", "png", "webp")
+    first = raw[0]
+    image_key = next((k for k in _IMAGE_KEYS if k in first), None)
+    if image_key is None:
+        raise RuntimeError(
+            f"No image field found in dataset. Available keys: {list(first.keys())}"
+        )
 
     # ── Build {original_int → canonical_name} ────────────────────────────────
     if hasattr(label_feature, "names"):
@@ -186,9 +197,9 @@ def get_dataloaders(
     val_rec   = shuffled[n_train : n_train + n_val]
     test_rec  = shuffled[n_train + n_val :]
 
-    train_ds = _PlantSubset(raw, train_rec, _TRAIN_TRANSFORMS)
-    val_ds   = _PlantSubset(raw, val_rec,   _EVAL_TRANSFORMS)
-    test_ds  = _PlantSubset(raw, test_rec,  _EVAL_TRANSFORMS)
+    train_ds = _PlantSubset(raw, train_rec, _TRAIN_TRANSFORMS, image_key)
+    val_ds   = _PlantSubset(raw, val_rec,   _EVAL_TRANSFORMS, image_key)
+    test_ds  = _PlantSubset(raw, test_rec,  _EVAL_TRANSFORMS, image_key)
 
     kw = dict(batch_size=batch_size, num_workers=num_workers, pin_memory=True)
     return (
