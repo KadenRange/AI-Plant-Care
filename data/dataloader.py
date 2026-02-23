@@ -167,7 +167,7 @@ def get_dataloaders(
     all_records: list[tuple[int, int]] = []
 
     for hf_idx, example in enumerate(raw):
-        raw_label = example["label"]
+        raw_label = example["label"] if label_is_int else example["__key__"]
         orig_int: int | None = int(raw_label) if label_is_int else str_to_int.get(str(raw_label))
         if orig_int is not None and orig_int in valid_orig:
             all_records.append((hf_idx, orig_to_new[orig_int]))
