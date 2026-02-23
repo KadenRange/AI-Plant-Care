@@ -9,6 +9,7 @@ Usage::
 """
 from __future__ import annotations
 
+import io
 import re
 from typing import Callable
 
@@ -103,8 +104,15 @@ class _PlantSubset(Dataset):
     def __getitem__(self, idx: int) -> tuple[torch.Tensor, int]:
         hf_idx, label = self.records[idx]
         img = self.hf_dataset[hf_idx][self.image_key]
-        if not isinstance(img, Image.Image):
+        if isinstance(img, Image.Image):
+            pass
+        elif isinstance(img, bytes):
+            img = Image.open(io.BytesIO(img))
+        elif img is not None:
             img = Image.fromarray(img)
+        else:
+            # Corrupt/missing record — return a blank image so the batch continues
+            img = Image.new("RGB", (224, 224))
         return self.transform(img.convert("RGB")), label
 
 

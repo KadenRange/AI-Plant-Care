@@ -135,6 +135,10 @@ def train(
     seed: int        = HPARAMS["seed"],
 ) -> None:
     """Full training run with stdout logging and optional W&B integration."""
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Device: {device}")
 
