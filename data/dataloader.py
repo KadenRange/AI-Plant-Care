@@ -137,7 +137,7 @@ def get_dataloaders(
         label_is_int = True
     else:
         # String-valued labels: enumerate unique values
-        unique = sorted({str(ex["label"]) for ex in raw})
+        unique = sorted({str(ex["__key__"]) for ex in raw})
         int_to_name = {i: v for i, v in enumerate(unique)}
         str_to_int  = {v: k for k, v in int_to_name.items()}
         label_is_int = False
