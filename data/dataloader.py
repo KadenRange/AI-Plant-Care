@@ -117,7 +117,7 @@ def get_dataloaders(
     else:
         # String-valued labels: single pass to collect keys and cache index pairs
         # so the dataset is not iterated a second time below.
-        raw_pairs = [(i, str(ex["__key__"])) for i, ex in enumerate(raw)]
+        raw_pairs = [(i, str(ex["__key__"]).split("/")[1]) for i, ex in enumerate(raw)]
         unique    = sorted({key for _, key in raw_pairs})
         int_to_name = {i: v for i, v in enumerate(unique)}
         str_to_int  = {v: k for k, v in int_to_name.items()}
