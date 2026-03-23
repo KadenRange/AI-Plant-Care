@@ -11,6 +11,7 @@ Run::
 from __future__ import annotations
 
 import io
+import json
 import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -24,20 +25,8 @@ from model.classifier import PlantClassifier
 
 logger = logging.getLogger(__name__)
 
-# ── Class names — must match the order produced by the training dataloader ────
-# The dataloader sorts labels alphabetically when using the __key__ path, so
-# this list is sorted A-Z over the 7 canonical species names.
-CLASS_NAMES: list[str] = [
-    "Aloe Vera",
-    "Dumb Cane (Dieffenbachia)",
-    "Monstera Deliciosa",
-    "Peace Lily (Spathiphyllum wallisii)",
-    "Pothos (Epipremnum aureum)",
-    "Snake Plant (Sansevieria)",
-    "ZZ Plant (Zamioculcas zamiifolia)",
-]
-
-WEIGHTS_PATH = Path("model/weights/best_model.pth")
+WEIGHTS_PATH     = Path("model/weights/best_model.pth")
+CLASS_NAMES_PATH = Path("model/weights/class_names.json")
 
 # ── Shared state (populated during lifespan startup) ─────────────────────────
 classifier: PlantClassifier | None = None
@@ -57,11 +46,17 @@ async def lifespan(app: FastAPI):
             "server is restarted.",
             WEIGHTS_PATH,
         )
+    elif not CLASS_NAMES_PATH.exists():
+        logger.warning(
+            "class_names.json not found at '%s'. Re-run training to generate it.",
+            CLASS_NAMES_PATH,
+        )
     else:
         try:
-            classifier = PlantClassifier(CLASS_NAMES, weights_path=WEIGHTS_PATH)
+            class_names = json.loads(CLASS_NAMES_PATH.read_text())
+            classifier = PlantClassifier(class_names, weights_path=WEIGHTS_PATH)
             model_loaded = True
-            logger.info("PlantClassifier loaded from '%s'.", WEIGHTS_PATH)
+            logger.info("PlantClassifier loaded with %d classes.", len(class_names))
         except Exception:
             logger.exception("Failed to load PlantClassifier.")
 

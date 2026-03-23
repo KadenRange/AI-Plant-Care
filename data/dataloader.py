@@ -1,7 +1,7 @@
 """dataloader.py — HuggingFace dataset loader for plant species classification.
 
-Filters the 47-class ``kakasher/house-plant-species`` dataset down to
-TARGET_CLASSES, remaps labels 0-N, and returns train / val / test DataLoaders.
+Loads all classes from ``kakasher/house-plant-species`` and returns
+train / val / test DataLoaders.
 
 Usage::
 
@@ -10,7 +10,6 @@ Usage::
 from __future__ import annotations
 
 import io
-import re
 from typing import Callable
 
 import torch
@@ -18,29 +17,6 @@ from datasets import load_dataset
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 from torchvision import transforms
-
-# ── Canonical target classes (index 0-6 in the model output) ─────────────────
-TARGET_CLASSES: list[str] = [
-    "Aloe Vera",
-    "Monstera Deliciosa",
-    "Dumb Cane (Dieffenbachia)",
-    "Pothos (Epipremnum aureum)",
-    "Peace Lily (Spathiphyllum wallisii)",
-    "Snake Plant (Sansevieria)",
-    "ZZ Plant (Zamioculcas zamiifolia)",
-]
-
-# Per-class keyword aliases used for fuzzy matching against dataset label names.
-# Keys are canonical names; values are lower-case substrings that indicate a match.
-_ALIASES: dict[str, list[str]] = {
-    "Aloe Vera": ["aloe vera", "aloe"],
-    "Monstera Deliciosa": ["monstera deliciosa", "monstera"],
-    "Dumb Cane (Dieffenbachia)": ["dumb cane", "dieffenbachia"],
-    "Pothos (Epipremnum aureum)": ["pothos", "epipremnum aureum", "golden pothos"],
-    "Peace Lily (Spathiphyllum wallisii)": ["peace lily", "spathiphyllum"],
-    "Snake Plant (Sansevieria)": ["snake plant", "sansevieria", "dracaena trifasciata"],
-    "ZZ Plant (Zamioculcas zamiifolia)": ["zz plant", "zamioculcas"],
-}
 
 _IMAGENET_MEAN = [0.485, 0.456, 0.406]
 _IMAGENET_STD  = [0.229, 0.224, 0.225]
@@ -59,23 +35,6 @@ _EVAL_TRANSFORMS = transforms.Compose([
     transforms.Normalize(_IMAGENET_MEAN, _IMAGENET_STD),
 ])
 
-
-def _normalize(s: str) -> str:
-    """Lowercase and strip non-alphanumeric chars for fuzzy comparison."""
-    return re.sub(r"[^a-z0-9 ]", "", s.lower()).strip()
-
-
-def _find_canonical(dataset_label: str) -> str | None:
-    """
-    Map a raw dataset label string to one of the TARGET_CLASSES canonical names.
-
-    Returns None if no alias matches.
-    """
-    norm = _normalize(dataset_label)
-    for canonical, aliases in _ALIASES.items():
-        if any(alias in norm or norm in alias for alias in aliases):
-            return canonical
-    return None
 
 
 class _PlantSubset(Dataset):
@@ -164,42 +123,21 @@ def get_dataloaders(
         str_to_int  = {v: k for k, v in int_to_name.items()}
         label_is_int = False
 
-    # ── Remap original ints → 0-based target indices ──────────────────────────
-    orig_to_new: dict[int, int] = {}
-    class_names: list[str] = []
+    # ── class_names is just the full sorted label list ────────────────────────
+    class_names: list[str] = [int_to_name[i] for i in sorted(int_to_name)]
 
-    for orig_int, dataset_name in int_to_name.items():
-        canonical = _find_canonical(dataset_name)
-        if canonical is None:
-            continue
-        if canonical not in class_names:
-            class_names.append(canonical)
-        orig_to_new[orig_int] = class_names.index(canonical)
-
-    if not class_names:
-        sample = list(int_to_name.values())[:10]
-        raise RuntimeError(
-            "No target classes matched any dataset labels.\n"
-            f"Sample dataset labels: {sample}\n"
-            "Adjust TARGET_CLASSES or _ALIASES in dataloader.py."
-        )
-
-    # ── Collect valid (hf_index, remapped_label) pairs ───────────────────────
-    valid_orig = set(orig_to_new)
+    # ── Collect all (hf_index, label) pairs ──────────────────────────────────
     all_records: list[tuple[int, int]] = []
 
     if label_is_int:
         for hf_idx, example in enumerate(raw):
-            orig_int = int(example["label"])
-            if orig_int in valid_orig:
-                all_records.append((hf_idx, orig_to_new[orig_int]))
+            all_records.append((hf_idx, int(example["label"])))
     else:
-        # raw_pairs was built during the unique-key pass above — no second read
         assert raw_pairs is not None
         for hf_idx, raw_key in raw_pairs:
             orig_int = str_to_int.get(raw_key)
-            if orig_int is not None and orig_int in valid_orig:
-                all_records.append((hf_idx, orig_to_new[orig_int]))
+            if orig_int is not None:
+                all_records.append((hf_idx, orig_int))
 
     # ── Reproducible 70 / 15 / 15 split ──────────────────────────────────────
     total   = len(all_records)

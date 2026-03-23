@@ -16,6 +16,7 @@ Run::
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 import torch
@@ -199,6 +200,7 @@ def train(
 
     # ── Training loop ─────────────────────────────────────────────────────────
     WEIGHTS_DIR.mkdir(parents=True, exist_ok=True)
+    (WEIGHTS_DIR / "class_names.json").write_text(json.dumps(class_names))
     best_path    = WEIGHTS_DIR / "best_model.pth"
     best_val_acc = 0.0
 
