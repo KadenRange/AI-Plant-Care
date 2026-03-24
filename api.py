@@ -16,12 +16,13 @@ import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, HTTPException, Query, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image, UnidentifiedImageError
 
 from care.care_lookup import get_care
 from model.classifier import PlantClassifier
+from model.gradcam import generate_heatmap
 
 logger = logging.getLogger(__name__)
 
@@ -109,3 +110,27 @@ async def predict(file: UploadFile = File(...)):
         "top3":       prediction["top3"],
         "care":       care,
     }
+
+
+@app.post("/explain")
+async def explain(
+    file: UploadFile = File(...),
+    class_idx: int | None = Query(None),
+):
+    if not model_loaded or classifier is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Model is not loaded. Ensure model/weights/best_model.pth exists and restart the server.",
+        )
+
+    data = await file.read()
+    try:
+        image = Image.open(io.BytesIO(data))
+    except UnidentifiedImageError:
+        raise HTTPException(status_code=400, detail="Uploaded file is not a valid image.")
+
+    overlay = generate_heatmap(image, classifier.model, class_idx=class_idx)
+
+    buf = io.BytesIO()
+    overlay.save(buf, format="JPEG")
+    return Response(content=buf.getvalue(), media_type="image/jpeg")
