@@ -11,60 +11,47 @@ Run::
 from __future__ import annotations
 
 import io
-import json
 import logging
 from contextlib import asynccontextmanager
-from pathlib import Path
 
 from fastapi import FastAPI, File, HTTPException, Query, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image, UnidentifiedImageError
 
 from care.care_lookup import get_care
-from model.classifier import PlantClassifier
+from model.adapters.efficientnet_adapter import EfficientNetAdapter
+from model.adapters.vit_adapter import ViTAdapter
 from model.gradcam import generate_heatmap
+from model.registry import ModelRegistry
 
 logger = logging.getLogger(__name__)
 
-WEIGHTS_PATH     = Path("model/weights/best_model.pth")
-CLASS_NAMES_PATH = Path("model/weights/class_names.json")
-
 # ── Shared state (populated during lifespan startup) ─────────────────────────
-classifier: PlantClassifier | None = None
-model_loaded: bool = False
+registry:     ModelRegistry | None = None
+classifier:   object | None        = None   # active adapter instance
+model_loaded: bool                 = False
 
 
-# ── Lifespan: load model once at startup ─────────────────────────────────────
+# ── Lifespan: build registry and load active adapter once at startup ──────────
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global classifier, model_loaded
+    global registry, classifier, model_loaded
 
-    if not WEIGHTS_PATH.exists():
-        logger.warning(
-            "Model weights not found at '%s'. "
-            "/predict will return 503 until weights are present and the "
-            "server is restarted.",
-            WEIGHTS_PATH,
-        )
-    elif not CLASS_NAMES_PATH.exists():
-        logger.warning(
-            "class_names.json not found at '%s'. Re-run training to generate it.",
-            CLASS_NAMES_PATH,
-        )
-    else:
-        try:
-            class_names = json.loads(CLASS_NAMES_PATH.read_text())
-            classifier = PlantClassifier(class_names, weights_path=WEIGHTS_PATH)
-            model_loaded = True
-            logger.info("PlantClassifier loaded with %d classes.", len(class_names))
-        except Exception:
-            logger.exception("Failed to load PlantClassifier.")
+    registry = ModelRegistry()
+    registry.register("efficientnet", EfficientNetAdapter)
+    registry.register("vit",          ViTAdapter)
+
+    try:
+        registry.load_active()
+        classifier   = registry.active()
+        model_loaded = True
+    except Exception:
+        logger.exception("Failed to load active model adapter '%s'.", registry.active_name)
 
     yield
 
-    # Cleanup (nothing to release for a CPU/GPU torch model)
-    classifier = None
+    classifier   = None
     model_loaded = False
 
 
@@ -85,6 +72,13 @@ app.add_middleware(
 @app.get("/health")
 def health():
     return {"status": "ok", "model_loaded": model_loaded}
+
+
+@app.get("/models")
+def models():
+    if registry is None:
+        return {"active": None, "available": []}
+    return {"active": registry.active_name, "available": registry.list()}
 
 
 @app.post("/predict")
